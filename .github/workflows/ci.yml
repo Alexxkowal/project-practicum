@@ -1,0 +1,28 @@
+name: project-practicum-ci
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+      - develop
+      - '*'
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'     # поменяй на свою версию при необходимости
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      # Сборка (если нужно отдельно от check)
+      - name: Build
+        run: ./gradlew --no-daemon build
