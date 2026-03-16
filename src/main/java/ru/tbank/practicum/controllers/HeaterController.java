@@ -1,17 +1,28 @@
 package ru.tbank.practicum.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.tbank.practicum.controllers.dto.HeaterRequestDTO;
+import ru.tbank.practicum.controllers.dto.HeaterResponseDTO;
+import ru.tbank.practicum.mappers.HeaterMapper;
+import ru.tbank.practicum.models.Heater;
+import ru.tbank.practicum.services.HeaterService;
 
-@Controller
+@RestController
 @RequestMapping("/heaters")
-public class BatteryController {
-    @PatchMapping("{id}/temperature")
-    public HeaterRequestDTO setTemperature(@RequestParam(required = true, name = "temperature") Double temperature){
+public class HeaterController {
+    private final HeaterService heaterService;
+    private final HeaterMapper heaterMapper;
 
+    public HeaterController(HeaterService heaterService, HeaterMapper heaterMapper) {
+        this.heaterService = heaterService;
+        this.heaterMapper = heaterMapper;
+    }
+
+    @PatchMapping("/{id}/temperature")
+    public HeaterResponseDTO setTemperature(@PathVariable("id") Long id,
+                                            @RequestBody HeaterRequestDTO dto) {
+        Heater heater = heaterService.updateTargetTemperature(id, dto.getTargetTemperature());
+        return heaterMapper.toResponse(heater);
     }
 }

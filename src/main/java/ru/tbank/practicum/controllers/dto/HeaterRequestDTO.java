@@ -1,5 +1,9 @@
 package ru.tbank.practicum.controllers.dto;
 
-public class HeaterDTO {
+import lombok.Data;
 
+@Data
+public class HeaterRequestDTO {
+    private Double targetTemperature;
+    private Boolean isWorking;
 }

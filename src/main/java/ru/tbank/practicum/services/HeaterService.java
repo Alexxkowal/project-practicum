@@ -1,4 +1,12 @@
 package ru.tbank.practicum.services;
 
-public class HeaterService {
+import ru.tbank.practicum.controllers.dto.HeaterRequestDTO;
+import ru.tbank.practicum.models.Heater;
+
+public interface HeaterService {
+    Heater save(Heater heater);
+
+    Heater updateTargetTemperature(Long id, Double targetTemperature);
+
+    Heater updateStatus(Long id, Boolean isWorking);
 }

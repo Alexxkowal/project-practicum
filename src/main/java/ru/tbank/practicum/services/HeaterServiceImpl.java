@@ -6,10 +6,10 @@ import ru.tbank.practicum.models.Heater;
 import ru.tbank.practicum.repositories.HeaterRepository;
 
 @Service
-public class HeaterInterfaceImpl implements HeaterService {
+public class HeaterServiceImpl implements HeaterService {
     private final HeaterRepository heaterRepository;
 
-    public HeaterInterfaceImpl(HeaterRepository heaterRepository) {
+    public HeaterServiceImpl(HeaterRepository heaterRepository) {
         this.heaterRepository = heaterRepository;
     }
 
@@ -18,14 +18,21 @@ public class HeaterInterfaceImpl implements HeaterService {
         return heaterRepository.save(heater);
     }
 
-    public Heater update(Long id, HeaterRequestDTO dto) {
-        Heater heater = heaterRepository.findById(id).orElseThrow(() -> new RuntimeException("Батарея не найдена"));
-        if (dto.getTargetTemperature() != null) {
-            heater.setTargetTemperature(dto.getTargetTemperature());
-        }
-        if (dto.getIsWorking() != null) {
-            heater.setWorking(dto.getIsWorking());
-        }
+    @Override
+    public Heater updateTargetTemperature(Long id, Double temperature){
+        Heater heater = getHeaterById(id);
+        heater.setTargetTemperature(temperature);
         return heaterRepository.save(heater);
+    }
+
+    @Override
+    public Heater updateStatus(Long id, Boolean isWorking){
+        Heater heater = getHeaterById(id);
+        heater.setWorking(isWorking);
+        return heaterRepository.save(heater);
+    }
+
+    private Heater getHeaterById(Long id){
+        return heaterRepository.findById(id).orElseThrow(() -> new RuntimeException("Батарея не найдена"));
     }
 }
