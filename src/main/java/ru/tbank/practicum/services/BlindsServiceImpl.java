@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.tbank.practicum.models.Blinds;
 import ru.tbank.practicum.repositories.BlindsRepository;
+import ru.tbank.practicum.repositories.StubBlindsRepository;
 
 import java.time.LocalTime;
 

@@ -11,11 +11,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
-public class HeaterRepository {
+public class StubHeaterRepository implements HeaterRepostory {
     private final Map<Long, Heater> heaters = new ConcurrentHashMap<>();
     private final AtomicLong idCounter = new AtomicLong(1);
 
-    public HeaterRepository() {
+    public StubHeaterRepository() {
         save(new Heater(null, 18.5, false, 22.0));
         save(new Heater(null, 21.0, true, 23.5));
     }
