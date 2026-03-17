@@ -1,38 +1,28 @@
 package ru.tbank.practicum.mappers;
 
-import org.springframework.stereotype.Component;
-import ru.tbank.practicum.controllers.dto.WeatherDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import ru.tbank.practicum.models.WeatherData;
 import ru.tbank.practicum.services.dto.WeatherResponse;
 
 import java.time.LocalDateTime;
 
-@Component
-public class WeatherMapper {
-    public WeatherData mapToModel(WeatherResponse weatherResponse) {
-        String description = "No description available"; // Значение по умолчанию
-        if (weatherResponse.getWeather() != null && !weatherResponse.getWeather().isEmpty()) {
-            description = weatherResponse.getWeather().get(0).getDescription();
+@Mapper(componentModel = "spring", imports = {LocalDateTime.class})
+public interface WeatherMapperTest {
+    @Mapping(target = "temperature", source = "main.temp")
+    @Mapping(target = "latitude", source = "coord.lat")
+    @Mapping(target = "longitude", source = "coord.lon")
+    @Mapping(target = "pressure", source = "main.pressure")
+    @Mapping(target = "windSpeed", source = "wind.speed")
+    @Mapping(target = "timestamp", expression = "java(LocalDateTime.now())")
+    @Mapping(target = "description", source = "weather")
+    WeatherData mapToModel(WeatherResponse weatherResponse);
+
+    default String mapDescription(List<WeatherDescription> weather) {
+        if (weather == null || weather.isEmpty()) {
+            return "No description available";
         }
-        return new WeatherData(
-                null,
-                weatherResponse.getMain().getTemp(),
-                description,
-                weatherResponse.getCoord().getLat(),
-                weatherResponse.getCoord().getLon(),
-                weatherResponse.getMain().getPressure(),
-                weatherResponse.getWind().getSpeed(),
-                LocalDateTime.now()
-        );
+        return weather.get(0).getDescription();
     }
-
-    public WeatherDTO mapToDto(WeatherData weatherData) {
-        return new WeatherDTO(
-                weatherData.getId(),
-                weatherData.getTemperature(),
-                weatherData.getDescription()
-        );
-    }
-
 
 }
