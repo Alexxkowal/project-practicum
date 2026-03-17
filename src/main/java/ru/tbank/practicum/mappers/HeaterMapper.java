@@ -6,7 +6,7 @@ import ru.tbank.practicum.controllers.dto.HeaterResponseDTO;
 import ru.tbank.practicum.models.Heater;
 
 @Mapper(componentModel = "spring")
-public interface HeaterMapperTest {
+public interface HeaterMapper {
     HeaterResponseDTO toResponse(Heater heater);
     Heater toEntity(HeaterRequestDTO dto);
 

@@ -4,3 +4,7 @@ server:
 app:
   cred:
     token: ""
+  weather:
+    update-rate: 5000
+    default-lat: 51.6
+    default-lon: 46

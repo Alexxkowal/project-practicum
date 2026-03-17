@@ -1,6 +1,5 @@
 package ru.tbank.practicum.controllers;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.tbank.practicum.controllers.dto.HeaterRequestDTO;
 import ru.tbank.practicum.controllers.dto.HeaterResponseDTO;
