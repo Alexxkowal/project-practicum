@@ -19,8 +19,7 @@ public class HeaterController {
     }
 
     @PatchMapping("/{id}/temperature")
-    public HeaterResponseDTO setTemperature(@PathVariable("id") Long id,
-                                            @RequestBody HeaterRequestDTO dto) {
+    public HeaterResponseDTO setTemperature(@PathVariable("id") Long id, @RequestBody HeaterRequestDTO dto) {
         Heater heater = heaterService.updateTargetTemperature(id, dto.getTargetTemperature());
         return heaterMapper.toResponse(heater);
     }

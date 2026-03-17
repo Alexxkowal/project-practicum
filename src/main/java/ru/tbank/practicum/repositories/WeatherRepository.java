@@ -1,9 +1,8 @@
 package ru.tbank.practicum.repositories;
 
-import ru.tbank.practicum.models.WeatherData;
-
 import java.time.LocalDate;
 import java.util.List;
+import ru.tbank.practicum.models.WeatherData;
 
 public interface WeatherRepository {
     List<WeatherData> findAll();

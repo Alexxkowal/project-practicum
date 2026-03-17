@@ -3,10 +3,8 @@ package ru.tbank.practicum.controllers.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-
 import java.time.LocalTime;
+import lombok.Data;
 
 @Data
 public class BlindsRequestDTO {

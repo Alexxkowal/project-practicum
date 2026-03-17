@@ -1,10 +1,8 @@
 package ru.tbank.practicum.repositories;
 
-import ru.tbank.practicum.models.Blinds;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import ru.tbank.practicum.models.Blinds;
 
 public interface BlindsRepository {
     Blinds save(Blinds blinds);

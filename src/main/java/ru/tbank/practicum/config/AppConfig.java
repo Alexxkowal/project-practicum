@@ -9,8 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @EnableScheduling
 public class AppConfig {
     @Bean
-    public WebClient webClient(){
+    public WebClient webClient() {
         return WebClient.builder().baseUrl("https://api.openweathermap.org").build();
     }
-
 }

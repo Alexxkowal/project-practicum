@@ -1,14 +1,13 @@
 package ru.tbank.practicum.repositories;
 
-import org.springframework.stereotype.Repository;
-import ru.tbank.practicum.models.WeatherData;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.stereotype.Repository;
+import ru.tbank.practicum.models.WeatherData;
 
 @Repository
 public class StubWeatherRepository implements WeatherRepository {
@@ -32,7 +31,9 @@ public class StubWeatherRepository implements WeatherRepository {
     }
 
     public List<WeatherData> findByDate(LocalDate date) {
-        return weatherDataMap.values().stream().filter(k -> k.getTime().toLocalDate().equals(date)).toList();
+        return weatherDataMap.values().stream()
+                .filter(k -> k.getTime().toLocalDate().equals(date))
+                .toList();
     }
 
     public List<WeatherData> findByCoordsAndDate(Double lat, Double lon, LocalDate date) {
@@ -42,5 +43,4 @@ public class StubWeatherRepository implements WeatherRepository {
                 .filter(w -> w.getTime().toLocalDate().equals(date))
                 .toList();
     }
-
 }

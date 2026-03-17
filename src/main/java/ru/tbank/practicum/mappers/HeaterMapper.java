@@ -8,6 +8,6 @@ import ru.tbank.practicum.models.Heater;
 @Mapper(componentModel = "spring")
 public interface HeaterMapper {
     HeaterResponseDTO toResponse(Heater heater);
-    Heater toEntity(HeaterRequestDTO dto);
 
+    Heater toEntity(HeaterRequestDTO dto);
 }

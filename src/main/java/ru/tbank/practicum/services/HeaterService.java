@@ -1,6 +1,5 @@
 package ru.tbank.practicum.services;
 
-import ru.tbank.practicum.controllers.dto.HeaterRequestDTO;
 import ru.tbank.practicum.models.Heater;
 
 public interface HeaterService {

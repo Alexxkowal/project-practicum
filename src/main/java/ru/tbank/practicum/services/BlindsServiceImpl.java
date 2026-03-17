@@ -1,15 +1,12 @@
 package ru.tbank.practicum.services;
 
-
+import java.time.LocalTime;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.tbank.practicum.models.Blinds;
 import ru.tbank.practicum.repositories.BlindsRepository;
-import ru.tbank.practicum.repositories.StubBlindsRepository;
-
-import java.time.LocalTime;
 
 @Slf4j
 @Service
@@ -28,7 +25,7 @@ public class BlindsServiceImpl implements BlindsService {
     }
 
     @Override
-    public Blinds updateSchelude(Long id, LocalTime openTime ,LocalTime closeTime){
+    public Blinds updateSchelude(Long id, LocalTime openTime, LocalTime closeTime) {
         Blinds blinds = getBlindsById(id);
         if (openTime != null) {
             blinds.setOpenTime(openTime);
@@ -40,7 +37,9 @@ public class BlindsServiceImpl implements BlindsService {
     }
 
     private Blinds getBlindsById(Long id) {
-        return blindsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Жалюзи с id " + id + " не найдены"));
+        return blindsRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Жалюзи с id " + id + " не найдены"));
     }
-
 }

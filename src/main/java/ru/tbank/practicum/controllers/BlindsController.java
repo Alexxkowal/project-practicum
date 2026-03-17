@@ -1,6 +1,5 @@
 package ru.tbank.practicum.controllers;
 
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +16,12 @@ public class BlindsController {
     private final BlindsMapper blindsMapper;
 
     @PatchMapping("/{id}/position")
-    public BlindsResponseDTO updatePosition(@PathVariable Long id, @Valid @RequestBody BlindsRequestDTO dto){
+    public BlindsResponseDTO updatePosition(@PathVariable Long id, @Valid @RequestBody BlindsRequestDTO dto) {
         return blindsMapper.toResponse(blindsService.updatePosition(id, dto.getPosition()));
     }
 
     @PatchMapping("/{id}/schelude")
-    public BlindsResponseDTO updateSchelude(@PathVariable Long id, @Valid @RequestBody BlindsRequestDTO dto){
+    public BlindsResponseDTO updateSchelude(@PathVariable Long id, @Valid @RequestBody BlindsRequestDTO dto) {
         return blindsMapper.toResponse(blindsService.updateSchelude(id, dto.getOpenTime(), dto.getCloseTime()));
     }
 }

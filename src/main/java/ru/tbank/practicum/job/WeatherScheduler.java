@@ -12,6 +12,7 @@ import ru.tbank.practicum.services.WeatherService;
 public class WeatherScheduler {
     private final WeatherService weatherService;
     private final WeatherMapper weatherMapper;
+
     @Value("${app.weather.default-lat}")
     private Double defaultLat;
 
@@ -22,13 +23,15 @@ public class WeatherScheduler {
         this.weatherService = weatherService;
         this.weatherMapper = weatherMapper;
     }
+
     @Scheduled(fixedRateString = "${app.weather.update-rate}")
-    public void logWeather(){
+    public void logWeather() {
         log.info("Scheduled weather update started for lat: {}, lon: {}", defaultLat, defaultLon);
         var weather = weatherService.getWeatherByCoordinateAndDate(defaultLat, defaultLon);
-        log.info("Weather updated successfully: Temp = {}, Description = {}, ID = {}",
-                     weather.getTemperature(),
-                     weather.getDescription(),
-                     weather.getId());
+        log.info(
+                "Weather updated successfully: Temp = {}, Description = {}, ID = {}",
+                weather.getTemperature(),
+                weather.getDescription(),
+                weather.getId());
     }
 }

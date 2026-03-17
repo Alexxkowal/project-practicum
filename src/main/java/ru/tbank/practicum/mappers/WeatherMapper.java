@@ -1,5 +1,7 @@
 package ru.tbank.practicum.mappers;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.tbank.practicum.controllers.dto.WeatherDTO;
@@ -7,10 +9,9 @@ import ru.tbank.practicum.models.WeatherData;
 import ru.tbank.practicum.services.dto.Weather;
 import ru.tbank.practicum.services.dto.WeatherResponse;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-@Mapper(componentModel = "spring", imports = {LocalDateTime.class})
+@Mapper(
+        componentModel = "spring",
+        imports = {LocalDateTime.class})
 public interface WeatherMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "temperature", source = "main.temp")

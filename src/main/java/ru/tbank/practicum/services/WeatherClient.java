@@ -13,13 +13,19 @@ public class WeatherClient {
 
     @Value("${app.cred.token}")
     private String token;
+
     public WeatherResponse fetchWeather(Double lat, Double lon) {
-        return webClient.get().uri(uriBuilder ->
-                uriBuilder.path("/data/2.5/weather")
+        return webClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/data/2.5/weather")
                         .queryParam("lat", lat)
                         .queryParam("lon", lon)
                         .queryParam("units", "metric")
                         .queryParam("appid", token)
-                        .build()).retrieve().bodyToMono(WeatherResponse.class).block();
+                        .build())
+                .retrieve()
+                .bodyToMono(WeatherResponse.class)
+                .block();
     }
 }
