@@ -1,6 +1,8 @@
 package ru.tbank.practicum.services;
 
 import java.time.LocalTime;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -10,12 +12,9 @@ import ru.tbank.practicum.repositories.BlindsRepository;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class BlindsServiceImpl implements BlindsService {
     private final BlindsRepository blindsRepository;
-
-    public BlindsServiceImpl(BlindsRepository blindsRepository) {
-        this.blindsRepository = blindsRepository;
-    }
 
     @Override
     public Blinds updatePosition(Long id, Integer position) {

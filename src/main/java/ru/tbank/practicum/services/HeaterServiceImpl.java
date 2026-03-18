@@ -1,16 +1,14 @@
 package ru.tbank.practicum.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.tbank.practicum.models.Heater;
 import ru.tbank.practicum.repositories.HeaterRepostory;
 
 @Service
+@RequiredArgsConstructor
 public class HeaterServiceImpl implements HeaterService {
     private final HeaterRepostory heaterRepostory;
-
-    public HeaterServiceImpl(HeaterRepostory heaterRepostory) {
-        this.heaterRepostory = heaterRepostory;
-    }
 
     @Override
     public Heater save(Heater heater) {

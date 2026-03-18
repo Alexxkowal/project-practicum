@@ -1,5 +1,6 @@
 package ru.tbank.practicum.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.tbank.practicum.controllers.dto.HeaterRequestDTO;
 import ru.tbank.practicum.controllers.dto.HeaterResponseDTO;
@@ -9,14 +10,10 @@ import ru.tbank.practicum.services.HeaterService;
 
 @RestController
 @RequestMapping("/heaters")
+@RequiredArgsConstructor
 public class HeaterController {
     private final HeaterService heaterService;
     private final HeaterMapper heaterMapper;
-
-    public HeaterController(HeaterService heaterService, HeaterMapper heaterMapper) {
-        this.heaterService = heaterService;
-        this.heaterMapper = heaterMapper;
-    }
 
     @PatchMapping("/{id}/temperature")
     public HeaterResponseDTO setTemperature(@PathVariable("id") Long id, @RequestBody HeaterRequestDTO dto) {
