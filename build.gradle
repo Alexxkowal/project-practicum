@@ -17,6 +17,16 @@ repositories {
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web:4.1.0-M2")
+    implementation("org.springframework.boot:spring-boot-starter-webflux:4.1.0-M2")
+//    implementation("org.springframework.boot:spring-boot-starter-data-jpa:4.1.0-M2")
+    implementation("jakarta.validation:jakarta.validation-api:4.0.0-M1")
+    implementation("org.hibernate.validator:hibernate-validator:9.1.0.Final")
+    implementation 'org.mapstruct:mapstruct:1.6.3'
+    compileOnly 'org.projectlombok:lombok:1.18.44'
+    annotationProcessor 'org.projectlombok:lombok:1.18.44'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    testImplementation("org.springframework.boot:spring-boot-starter-test:4.1.0-M2")
 
 }
 
