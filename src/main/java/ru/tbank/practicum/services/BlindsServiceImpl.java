@@ -18,7 +18,7 @@ public class BlindsServiceImpl implements BlindsService {
     @Override
     public Blinds updatePosition(Long id, Integer position) {
         Blinds blinds = getBlindsById(id);
-        blinds.setPosition(position);
+        blinds.setTargetPosition(position);
         return blindsRepository.save(blinds);
     }
 

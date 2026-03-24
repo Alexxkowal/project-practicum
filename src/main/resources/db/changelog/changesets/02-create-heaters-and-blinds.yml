@@ -1,0 +1,54 @@
+databaseChangeLog:
+  - changeSet:
+      id: 22032026-create-heaters
+      author: Alexkowal
+      changes:
+        - createTable:
+            tableName: heaters
+            columns:
+              - column:
+                  name: device_id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    foreignKeyName: fk_heaters_devices
+                    referencedTableName: devices
+                    referencedColumnNames: id
+                    deleteCascade: true
+              - column:
+                  name: current_temp
+                  type: DOUBLE PRECISION
+              - column:
+                  name: is_working
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                    defaultValueBoolean: false
+              - column:
+                  name: target_temp
+                  type: DOUBLE PRECISION
+
+  - changeSet:
+      id: 22032026-create-blinds
+      author: Alexkowal
+      changes:
+        - createTable:
+            tableName: blinds
+            columns:
+              - column:
+                  name: device_id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    foreignKeyName: fk_blinds_devices
+                    referencedTableName: devices
+                    referencedColumnNames: id
+                    deleteCascade: true
+              - column:
+                  name: current_position
+                  type: INT
+              - column:
+                  name: target_position
+                  type: INT

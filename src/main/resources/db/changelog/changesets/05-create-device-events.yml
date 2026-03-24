@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 22032026-create-device-events
+      author: Alexkowal
+      changes:
+        - createTable:
+            tableName: device_events
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: device_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_events_devices
+                    referencedTableName: devices
+                    referencedColumnNames: id
+                    deleteCascade: true
+              - column:
+                  name: event_type
+                  type: VARCHAR(50)
+                  remarks: "Типы: INFO, WARNING, ERROR, ACTION"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: message
+                  type: VARCHAR(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+                  defaultValueComputed: "CURRENT_TIMESTAMP"
