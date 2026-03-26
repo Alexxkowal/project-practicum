@@ -23,7 +23,7 @@ public class Heater {
     @Column(name = "target_temp")
     private Double targetTemp;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "device_id")
     private Device device;

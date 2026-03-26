@@ -1,6 +1,13 @@
 package ru.tbank.practicum.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +34,7 @@ public class Blinds {
     @Column(name = "close_time")
     private LocalTime closeTime;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "device_id")
     private Device device;

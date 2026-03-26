@@ -2,6 +2,7 @@ package ru.tbank.practicum.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.tbank.practicum.exception.HeaterNotFoundException;
 import ru.tbank.practicum.models.Heater;
 import ru.tbank.practicum.repositories.HeaterRepository;
 
@@ -30,6 +31,6 @@ public class HeaterServiceImpl implements HeaterService {
     }
 
     private Heater getHeaterById(Long id) {
-        return heaterRepository.findById(id).orElseThrow(() -> new RuntimeException("Батарея не найдена"));
+        return heaterRepository.findById(id).orElseThrow(() -> new HeaterNotFoundException(id));
     }
 }
