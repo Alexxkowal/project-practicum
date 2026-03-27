@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: 22032026-create-weather-table
+      author: Alexkowal
+      changes:
+        - createTable:
+            tableName: weather
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: temperature
+                  type: DOUBLE PRECISION
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  name: lat
+                  type: DOUBLE PRECISION
+              - column:
+                  name: lon
+                  type: DOUBLE PRECISION
+              - column:
+                  name: pressure
+                  type: INT
+              - column:
+                  name: clouds
+                  type: INT
+                  remarks: "Облачность в процентах"
+              - column:
+                  name: wind_speed
+                  type: DOUBLE PRECISION
+              - column:
+                  name: time
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+                  defaultValueComputed: "CURRENT_TIMESTAMP"
+
+  - changeSet:
+      id: 22032026-add-weather-time-index
+      author: Alexkowal
+      changes:
+        - createIndex:
+            indexName: idx_weather_time
+            tableName: weather
+            columns:
+              - column:
+                  name: time

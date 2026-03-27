@@ -1,6 +1,25 @@
 server:
   port: 8081
 
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/smart_home
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yml
+
+logging:
+  level:
+    org.springframework.boot.autoconfigure.liquibase: TRACE
+    org.springframework.boot.autoconfigure: DEBUG
+
 app:
   cred:
     token: ""

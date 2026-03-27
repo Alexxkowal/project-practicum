@@ -3,9 +3,8 @@ package ru.tbank.practicum.services;
 import java.time.LocalTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import ru.tbank.practicum.exception.BlindsNotFoundException;
 import ru.tbank.practicum.models.Blinds;
 import ru.tbank.practicum.repositories.BlindsRepository;
 
@@ -18,7 +17,7 @@ public class BlindsServiceImpl implements BlindsService {
     @Override
     public Blinds updatePosition(Long id, Integer position) {
         Blinds blinds = getBlindsById(id);
-        blinds.setPosition(position);
+        blinds.setTargetPosition(position);
         return blindsRepository.save(blinds);
     }
 
@@ -35,9 +34,6 @@ public class BlindsServiceImpl implements BlindsService {
     }
 
     private Blinds getBlindsById(Long id) {
-        return blindsRepository
-                .findById(id)
-                .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Жалюзи с id " + id + " не найдены"));
+        return blindsRepository.findById(id).orElseThrow(() -> new BlindsNotFoundException(id));
     }
 }

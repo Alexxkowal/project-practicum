@@ -18,6 +18,7 @@ public interface WeatherMapper {
     @Mapping(target = "lat", source = "coord.lat")
     @Mapping(target = "lon", source = "coord.lon")
     @Mapping(target = "pressure", source = "main.pressure")
+    @Mapping(target = "clouds", source = "clouds.all")
     @Mapping(target = "windSpeed", source = "wind.speed")
     @Mapping(target = "time", expression = "java(LocalDateTime.now())")
     @Mapping(target = "description", source = "weather")
