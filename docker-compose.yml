@@ -12,10 +12,47 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user -d smart_home"]
+      test: [ "CMD-SHELL", "pg_isready -U user -d smart_home" ]
       interval: 5s
       timeout: 5s
       retries: 5
+
+  migrator:
+    build:
+      context: .
+      dockerfile: Dockerfile.migrator
+    image: smart-home-migrator:5.0
+    container_name: smart-home-migrator
+    volumes:
+      - ./src/main/resources/db:/liquibase/db
+    command: >
+      --url=jdbc:postgresql://postgres:5432/smart_home
+      --username=user
+      --password=password
+      --changelog-file=db/changelog/db.changelog-master.yml
+      update
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: smart-home:latest
+    container_name: smart-home-app
+    environment:
+      - DB_HOST=${DB_HOST}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://smart-home-db:5432/smart_home
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+    ports:
+      - 8081:8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrator:
+        condition: service_completed_successfully
 
 volumes:
   pg_data:
