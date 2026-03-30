@@ -23,8 +23,6 @@ services:
       dockerfile: Dockerfile.migrator
     image: smart-home-migrator:5.0
     container_name: smart-home-migrator
-    volumes:
-      - ./src/main/resources/db:/liquibase/db
     command: >
       --url=jdbc:postgresql://postgres:5432/smart_home
       --username=user
