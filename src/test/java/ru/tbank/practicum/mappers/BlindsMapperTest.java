@@ -14,7 +14,6 @@ class BlindsMapperTest {
 
     @Test
     void shouldMapAllFieldsToResponse() {
-        // Given
         LocalTime open = LocalTime.of(7, 0);
         LocalTime close = LocalTime.of(22, 0);
         Blinds blinds = new Blinds();

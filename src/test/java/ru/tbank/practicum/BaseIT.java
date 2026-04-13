@@ -15,6 +15,4 @@ public abstract class BaseIT {
     @Container
     @ServiceConnection
     protected static final PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:17-alpine");
-
-    // Здесь можно добавить общие бины, например ObjectMapper
 }
