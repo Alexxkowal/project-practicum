@@ -1,6 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
+    url: jdbc:tc:postgresql:17-alpine:///smart_home
 
   liquibase:
     enabled: true
