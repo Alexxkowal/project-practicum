@@ -40,8 +40,7 @@ services:
     image: smart-home:latest
     container_name: smart-home-app
     environment:
-      - DB_HOST=${DB_HOST}
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://smart-home-db:5432/smart_home
+      - DB_HOST=postgres
       - SPRING_DATASOURCE_USERNAME=user
       - SPRING_DATASOURCE_PASSWORD=password
     ports:
