@@ -1,8 +1,7 @@
 spring:
   datasource:
+    # Оставляем пустые заглушки, Testcontainers их перекроет через @ServiceConnection
     driver-class-name: org.postgresql.Driver
-    url: jdbc:tc:postgresql:17-alpine:///smart_home
-
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yml
@@ -10,10 +9,10 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-
 app:
+  cred:
+    token: "test-token"
   weather:
-    update-rate: 1000000
+    update-rate: 1000000 # Чтобы планировщик не мешал тестам
+    default-lat: 51.6
+    default-lon: 46.0
