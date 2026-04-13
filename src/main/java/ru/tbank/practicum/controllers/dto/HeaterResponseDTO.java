@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class HeaterResponseDTO {
     private Long id;
-    private double currentTemperature;
-    private double targetTemperature;
+    private double currentTemp;
+    private double targetTemp;
     private boolean isWorking;
 }

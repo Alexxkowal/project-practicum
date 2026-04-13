@@ -22,7 +22,7 @@ public class BlindsServiceImpl implements BlindsService {
     }
 
     @Override
-    public Blinds updateSchelude(Long id, LocalTime openTime, LocalTime closeTime) {
+    public Blinds updateSchedule(Long id, LocalTime openTime, LocalTime closeTime) {
         Blinds blinds = getBlindsById(id);
         if (openTime != null) {
             blinds.setOpenTime(openTime);

@@ -1,7 +1,7 @@
 package ru.tbank.practicum.exception;
 
-public class EntityNotFoundExcpetion extends RuntimeException {
-    public EntityNotFoundExcpetion(String message) {
+public class EntityNotFoundException extends RuntimeException {
+    public EntityNotFoundException(String message) {
         super(message);
     }
 }

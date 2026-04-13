@@ -20,8 +20,8 @@ public class BlindsController {
         return blindsMapper.toResponse(blindsService.updatePosition(id, dto.getPosition()));
     }
 
-    @PatchMapping("/{id}/schelude")
-    public BlindsResponseDTO updateSchelude(@PathVariable Long id, @Valid @RequestBody BlindsRequestDTO dto) {
-        return blindsMapper.toResponse(blindsService.updateSchelude(id, dto.getOpenTime(), dto.getCloseTime()));
+    @PatchMapping("/{id}/schedule")
+    public BlindsResponseDTO updateSchedule(@PathVariable Long id, @Valid @RequestBody BlindsRequestDTO dto) {
+        return blindsMapper.toResponse(blindsService.updateSchedule(id, dto.getOpenTime(), dto.getCloseTime()));
     }
 }

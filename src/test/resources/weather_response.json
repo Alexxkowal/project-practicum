@@ -1,0 +1,49 @@
+{
+    "coord": {
+        "lon": 46,
+        "lat": 51.59
+    },
+    "weather": [
+        {
+            "id": 500,
+            "main": "Rain",
+            "description": "light rain",
+            "icon": "10n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 277.69,
+        "feels_like": 276.7,
+        "temp_min": 277.69,
+        "temp_max": 277.69,
+        "pressure": 1023,
+        "humidity": 77,
+        "sea_level": 1023,
+        "grnd_level": 1013
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.41,
+        "deg": 55,
+        "gust": 1.57
+    },
+    "rain": {
+        "1h": 0.17
+    },
+    "clouds": {
+        "all": 89
+    },
+    "dt": 1775934661,
+    "sys": {
+        "type": 2,
+        "id": 2038318,
+        "country": "RU",
+        "sunrise": 1775873357,
+        "sunset": 1775922270
+    },
+    "timezone": 14400,
+    "id": 498677,
+    "name": "Saratov",
+    "cod": 200
+}
