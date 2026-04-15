@@ -28,7 +28,7 @@ class BlindsServiceImplTest {
     private BlindsServiceImpl blindsService;
 
     @Test
-    void updatePosition_ShouldReturnUpdatedBlinds() {
+    public void updatePosition_ShouldReturnUpdatedBlinds() {
         Long id = 1L;
         Integer newPosition = 50;
         Blinds blinds = new Blinds();
@@ -46,7 +46,7 @@ class BlindsServiceImplTest {
     }
 
     @Test
-    void updatePosition_ShouldThrowException_WhenNotFound() {
+    public void updatePosition_ShouldThrowException_WhenNotFound() {
         Long id = 99L;
         when(blindsRepository.findById(id)).thenReturn(Optional.empty());
         assertThrows(BlindsNotFoundException.class, () -> {

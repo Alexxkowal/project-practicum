@@ -32,7 +32,7 @@ class WeatherServiceImplTest {
     private WeatherServiceImpl weatherService;
 
     @Test
-    void getWeather_ShouldReturnCorrectDto() {
+    public void getWeather_ShouldReturnCorrectDto() {
         Double lat = 55.0, lon = 37.0;
         WeatherResponse mockResponse = new WeatherResponse();
         WeatherData mockEntity = new WeatherData();
@@ -50,7 +50,7 @@ class WeatherServiceImplTest {
     }
 
     @Test
-    void findAllWeather_ShouldReturnDtoList() {
+    public void findAllWeather_ShouldReturnDtoList() {
         WeatherData w1 = new WeatherData();
         WeatherData w2 = new WeatherData();
         when(weatherRepository.findAll()).thenReturn(List.of(w1, w2));

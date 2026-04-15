@@ -26,7 +26,7 @@ class HeaterControllerTest {
     private HeaterService heaterService;
 
     @Test
-    void setTemperature() throws Exception {
+    public void setTemperature() throws Exception {
         Long id = 1L;
         Double newTargetTemperature = 25.0;
 
@@ -48,7 +48,7 @@ class HeaterControllerTest {
     }
 
     @Test
-    void setTemperature_ShouldReturn400_WhenTemperatureIncorrect() throws Exception {
+    public void setTemperature_ShouldReturn400_WhenTemperatureIncorrect() throws Exception {
         mockMvc.perform(patch("/heaters/1/temperature")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"targetTemp\": 0}"))
@@ -56,7 +56,7 @@ class HeaterControllerTest {
     }
 
     @Test
-    void setTemperature_ShouldReturn404_WhenHeaterNotFound() throws Exception {
+    public void setTemperature_ShouldReturn404_WhenHeaterNotFound() throws Exception {
         Long id = 1L;
         when(heaterService.updateTargetTemperature(id, 25.0)).thenThrow(new HeaterNotFoundException(id));
 

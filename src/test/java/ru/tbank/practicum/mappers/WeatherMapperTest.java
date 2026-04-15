@@ -13,7 +13,7 @@ class WeatherMapperTest {
     private final WeatherMapper mapper = Mappers.getMapper(WeatherMapper.class);
 
     @Test
-    void mapToModel_ShouldHandleDeepMappingAndDescription() {
+    public void mapToModel_ShouldHandleDeepMappingAndDescription() {
         WeatherResponse response = new WeatherResponse();
         CommonData main = new CommonData();
         main.setTemp(25.5);
@@ -42,7 +42,7 @@ class WeatherMapperTest {
     }
 
     @Test
-    void shouldMapEntityToDto() {
+    public void shouldMapEntityToDto() {
         WeatherData entity = new WeatherData();
         entity.setId(100L);
         entity.setTemperature(15.5);

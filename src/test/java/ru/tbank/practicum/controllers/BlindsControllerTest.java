@@ -29,7 +29,7 @@ class BlindsControllerTest {
     private BlindsService blindsService;
 
     @Test
-    void updatePosition() throws Exception {
+    public void updatePosition() throws Exception {
         Long deviceId = 1L;
         Integer newPosition = 20;
 
@@ -53,7 +53,7 @@ class BlindsControllerTest {
     }
 
     @Test
-    void updateSchedule() throws Exception {
+    public void updateSchedule() throws Exception {
         Long deviceId = 1L;
         LocalTime open = LocalTime.of(8, 0);
         LocalTime close = LocalTime.of(22, 0);
@@ -79,7 +79,7 @@ class BlindsControllerTest {
     }
 
     @Test
-    void updatePosition_ShouldReturn404_WhenBlindsNotFound() throws Exception {
+    public void updatePosition_ShouldReturn404_WhenBlindsNotFound() throws Exception {
         Long notExistentId = 999L;
         when(blindsService.updatePosition(eq(notExistentId), anyInt()))
                 .thenThrow(new BlindsNotFoundException(notExistentId));
@@ -91,7 +91,7 @@ class BlindsControllerTest {
     }
 
     @Test
-    void updatePosition_ShouldReturn400_WhenPositionIncorrect() throws Exception {
+    public void updatePosition_ShouldReturn400_WhenPositionIncorrect() throws Exception {
         mockMvc.perform(patch("/blinds/1/position")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"position\": -1}"))

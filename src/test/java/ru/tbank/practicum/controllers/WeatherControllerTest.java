@@ -25,14 +25,14 @@ class WeatherControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    void history_ShouldReturnList() throws Exception {
+    public void history_ShouldReturnList() throws Exception {
         mockMvc.perform(get("/weather/history"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
     }
 
     @Test
-    void getCurrentWeather() throws Exception {
+    public void getCurrentWeather() throws Exception {
         WeatherDTO weatherDTO = new WeatherDTO();
         weatherDTO.setId(1L);
         weatherDTO.setTemperature(20.0);

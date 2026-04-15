@@ -35,7 +35,7 @@ class HeaterControllerIT extends BaseIT {
 
     @Test
     @DisplayName("PATCH /heaters/{id}: Успешное обновление целевой температуры в БД")
-    void updateTemperature_ShouldUpdateValueInDatabase() throws Exception {
+    public void updateTemperature_ShouldUpdateValueInDatabase() throws Exception {
         Device device = new Device();
         device.setName("Умный обогреватель");
         device.setType(DeviceType.HEATER);

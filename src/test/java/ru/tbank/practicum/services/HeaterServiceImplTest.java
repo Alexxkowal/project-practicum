@@ -26,7 +26,7 @@ class HeaterServiceImplTest {
     private HeaterServiceImpl heaterService;
 
     @Test
-    void updateStatus_ShouldChangeIsWorking() {
+    public void updateStatus_ShouldChangeIsWorking() {
         Long id = 1L;
         Heater heater = new Heater();
         heater.setId(id);
@@ -39,7 +39,7 @@ class HeaterServiceImplTest {
     }
 
     @Test
-    void updateTargetTemperature_ShouldThrowException() {
+    public void updateTargetTemperature_ShouldThrowException() {
         Long id = 5L;
         when(heaterRepository.findById(id)).thenReturn(Optional.empty());
         assertThrows(HeaterNotFoundException.class, () -> heaterService.updateTargetTemperature(id, 25.5));

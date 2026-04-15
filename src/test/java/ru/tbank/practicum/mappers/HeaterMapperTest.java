@@ -13,7 +13,7 @@ class HeaterMapperTest {
     private final HeaterMapper mapper = Mappers.getMapper(HeaterMapper.class);
 
     @Test
-    void shouldMapEntityToResponse() {
+    public void shouldMapEntityToResponse() {
         Heater heater = new Heater();
         heater.setId(5L);
         heater.setCurrentTemp(22.5);
@@ -29,7 +29,7 @@ class HeaterMapperTest {
     }
 
     @Test
-    void shouldMapRequestToEntity() {
+    public void shouldMapRequestToEntity() {
         HeaterRequestDTO request = new HeaterRequestDTO();
         request.setTargetTemp(21.0);
         request.setIsWorking(false);

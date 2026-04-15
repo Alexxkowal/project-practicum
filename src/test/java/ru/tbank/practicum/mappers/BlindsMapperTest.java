@@ -13,7 +13,7 @@ class BlindsMapperTest {
     private final BlindsMapper mapper = Mappers.getMapper(BlindsMapper.class);
 
     @Test
-    void shouldMapAllFieldsToResponse() {
+    public void shouldMapAllFieldsToResponse() {
         LocalTime open = LocalTime.of(7, 0);
         LocalTime close = LocalTime.of(22, 0);
         Blinds blinds = new Blinds();
@@ -33,7 +33,7 @@ class BlindsMapperTest {
     }
 
     @Test
-    void shouldReturnNullWhenSourceIsNull() {
+    public void shouldReturnNullWhenSourceIsNull() {
         assertNull(mapper.toResponse(null));
     }
 }
