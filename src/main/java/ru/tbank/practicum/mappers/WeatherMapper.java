@@ -30,6 +30,6 @@ public interface WeatherMapper {
         if (weather == null || weather.isEmpty()) {
             return "No description available";
         }
-        return weather.get(0).getDescription();
+        return weather.getFirst().getDescription();
     }
 }

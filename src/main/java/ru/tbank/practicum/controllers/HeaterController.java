@@ -1,5 +1,6 @@
 package ru.tbank.practicum.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.tbank.practicum.controllers.dto.HeaterRequestDTO;
@@ -16,8 +17,8 @@ public class HeaterController {
     private final HeaterMapper heaterMapper;
 
     @PatchMapping("/{id}/temperature")
-    public HeaterResponseDTO setTemperature(@PathVariable("id") Long id, @RequestBody HeaterRequestDTO dto) {
-        Heater heater = heaterService.updateTargetTemperature(id, dto.getTargetTemperature());
+    public HeaterResponseDTO setTemperature(@PathVariable("id") Long id, @Valid @RequestBody HeaterRequestDTO dto) {
+        Heater heater = heaterService.updateTargetTemperature(id, dto.getTargetTemp());
         return heaterMapper.toResponse(heater);
     }
 }

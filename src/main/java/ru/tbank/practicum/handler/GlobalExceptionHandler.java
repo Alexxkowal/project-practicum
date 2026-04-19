@@ -6,13 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.tbank.practicum.exception.EntityNotFoundExcpetion;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import ru.tbank.practicum.exception.EntityNotFoundException;
 import ru.tbank.practicum.exception.ErrorResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(EntityNotFoundExcpetion.class)
-    public ResponseEntity<ErrorResponse> handleNotFound(EntityNotFoundExcpetion ex, HttpServletRequest request) {
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(EntityNotFoundException ex, HttpServletRequest request) {
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
@@ -20,5 +21,13 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),
                 request.getRequestURI());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(WebClientResponseException.class)
+    public ResponseEntity<String> handleWebClientResponseException(WebClientResponseException ex) {
+        // Логируем ошибку, чтобы понимать, что стряслось
+        // И возвращаем 500 статус, который поймает твой mockMvc
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Ошибка внешнего сервиса погоды: " + ex.getMessage());
     }
 }

@@ -1,0 +1,32 @@
+spring:
+  datasource:
+
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yml
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+app:
+  cred:
+    token: "test-token"
+  weather:
+    base-url: http://localhost:${wiremock.server.port}
+    update-rate: 1000000
+    default-lat: 51.6
+    default-lon: 46.0
+
+  logging:
+    level:
+      org.springframework.web.reactive.function.client.WebClient: DEBUG
+      reactor.netty.http.client.HttpClient: DEBUG
+      org.springframework.test.context.support.DynamicPropertiesContextCustomizer: DEBUG
+      org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl: DEBUG
+      org.springframework.orm.jpa.JpaTransactionManager: DEBUG
+      org.springframework.transaction: TRACE
+      com.zaxxer.hikari: DEBUG
+      org.testcontainers: DEBUG
+      com.github.dockerjava: WARN
+      org.springframework.boot.testcontainers.service.connection: DEBUG

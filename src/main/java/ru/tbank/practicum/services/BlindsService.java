@@ -7,5 +7,5 @@ public interface BlindsService {
 
     Blinds updatePosition(Long id, Integer position);
 
-    Blinds updateSchelude(Long id, LocalTime openTime, LocalTime closeTime);
+    Blinds updateSchedule(Long id, LocalTime openTime, LocalTime closeTime);
 }

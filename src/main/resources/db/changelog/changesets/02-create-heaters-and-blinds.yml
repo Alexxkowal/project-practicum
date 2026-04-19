@@ -52,3 +52,9 @@ databaseChangeLog:
               - column:
                   name: target_position
                   type: INT
+              - column:
+                  name: open_time
+                  type: TIME
+              - column:
+                  name: close_time
+                  type: TIME
