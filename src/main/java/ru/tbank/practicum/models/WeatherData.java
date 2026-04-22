@@ -39,4 +39,7 @@ public class WeatherData {
 
     @Column(nullable = false)
     private LocalDateTime time;
+
+    @Column
+    private Integer humidity;
 }

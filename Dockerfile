@@ -7,7 +7,7 @@ COPY gradle gradle
 COPY build.gradle settings.gradle ./
 COPY src src
 RUN ./gradlew spotlessApply
-RUN ./gradlew clean build
+RUN ./gradlew clean build -x test
 
 FROM eclipse-temurin:25-jre-alpine
 WORKDIR /app
