@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260423-add-weather-code-column
+      author: Alexkowal
+      changes:
+        - addColumn:
+            tableName: weather
+            columns:
+              - column:
+                  name: weather_code
+                  type: INT
+                  remarks: "ID состояния погоды от OpenWeatherMap"

@@ -7,6 +7,5 @@ public record WeatherEvent(
         Double temperature,
         String description,
         Integer humidity,
-        LocalDateTime createdAt
-) {
-}
+        Integer weatherCode,
+        LocalDateTime createdAt) {}

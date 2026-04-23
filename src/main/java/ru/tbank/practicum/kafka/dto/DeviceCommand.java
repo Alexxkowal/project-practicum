@@ -1,4 +1,5 @@
 package ru.tbank.practicum.kafka.dto;
 
-public record DeviceCommand() {
-}
+import ru.tbank.practicum.kafka.dto.enums.DeviceAction;
+
+public record DeviceCommand(String deviceType, Long deviceId, DeviceAction action, Double value) {}

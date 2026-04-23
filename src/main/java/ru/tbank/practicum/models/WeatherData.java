@@ -22,6 +22,9 @@ public class WeatherData {
     @Column
     private String description;
 
+    @Column(name = "weather_code")
+    private Integer weatherCode;
+
     @Column
     private Double lat;
 

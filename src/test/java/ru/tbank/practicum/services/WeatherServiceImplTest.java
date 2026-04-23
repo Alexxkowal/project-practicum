@@ -6,7 +6,6 @@ import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -46,7 +45,7 @@ class WeatherServiceImplTest {
         WeatherResponse mockResponse = new WeatherResponse();
         WeatherData mockEntity = new WeatherData();
         mockEntity.setId(1L);
-        WeatherEvent mockEvent = new WeatherEvent("uuid", 20.0, "Sunny", 50, LocalDateTime.now());
+        WeatherEvent mockEvent = new WeatherEvent("uuid", 20.0, "Sunny", 50, 200, LocalDateTime.now());
         WeatherDTO expectedDto = new WeatherDTO();
         when(weatherClient.fetchWeather(lat, lon)).thenReturn(mockResponse);
         when(weatherMapper.mapToModel(mockResponse)).thenReturn(mockEntity);

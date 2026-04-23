@@ -14,9 +14,10 @@ public class WeatherEventProducer {
 
     @Value("${spring.kafka.topic.weather}")
     private String weatherTopic;
+
     private final KafkaTemplate<String, WeatherEvent> kafkaTemplate;
 
-    public void send(WeatherEvent evt){
+    public void send(WeatherEvent evt) {
         log.info("Send event to kafka {}", evt);
         kafkaTemplate.send(weatherTopic, evt.eventId(), evt);
     }

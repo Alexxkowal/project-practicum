@@ -13,9 +13,6 @@ public class KafkaTopicConfig {
 
     @Bean
     public NewTopic weatherTelemetryTopic() {
-        return TopicBuilder.name(weatherTopic)
-                .partitions(1)
-                .replicas(1)
-                .build();
+        return TopicBuilder.name(weatherTopic).partitions(1).replicas(1).build();
     }
 }

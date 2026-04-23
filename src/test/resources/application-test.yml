@@ -30,3 +30,9 @@ app:
       org.testcontainers: DEBUG
       com.github.dockerjava: WARN
       org.springframework.boot.testcontainers.service.connection: DEBUG
+kafka:
+  topic:
+    weather: weather-test-topic
+    actuator-commands: commands-test-topic
+  consumer:
+    group-id: test-group
