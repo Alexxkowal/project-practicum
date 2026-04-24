@@ -18,6 +18,21 @@ app:
     default-lat: 51.6
     default-lon: 46.0
 
+  automation:
+    blinds:
+      closed-position: 0
+      opened-position: 100
+      sunny-position: 20
+      high-temp-threshold: 25.0
+      low-temp-threshold: 5.0
+      atmosphere-position: 100
+      rain-snow-warm-position: 100
+      rain-snow-cold-position: 50
+    heaters:
+      cold-threshold: 10.0
+      stop-threshold: 18.0
+      default-target-temp: 25.0
+
   logging:
     level:
       org.springframework.web.reactive.function.client.WebClient: DEBUG
