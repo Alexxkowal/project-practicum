@@ -29,7 +29,6 @@ public class ActuatorCommandConsumer {
                     blindsService.processCommand(command);
                     log.debug("Команда успешно передана в BlindsService");
                 }
-                default -> log.warn("Неизвестный тип устройства в команде: {}", command.deviceType());
             }
         } catch (Exception e) {
             log.error("Ошибка при выполнении команды для устройства {}: {}", command.deviceId(), e.getMessage(), e);
