@@ -5,6 +5,7 @@ import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import ru.tbank.practicum.config.BlindsAutomationConfig;
 import ru.tbank.practicum.kafka.dto.DeviceCommand;
 import ru.tbank.practicum.kafka.dto.WeatherEvent;
 import ru.tbank.practicum.kafka.dto.enums.DeviceAction;
@@ -17,6 +18,7 @@ import ru.tbank.practicum.services.BlindsService;
 @RequiredArgsConstructor
 public class BlindsStrategy implements AutomationStrategy {
     private final BlindsService blindsService;
+    private final BlindsAutomationConfig blindsAutomationConfig;
 
     @Override
     public List<DeviceCommand> process(WeatherEvent event) {
@@ -26,21 +28,22 @@ public class BlindsStrategy implements AutomationStrategy {
                 .map(blinds -> {
                     if (category == WeatherCategory.THUNDERSTORM
                             || event.weatherCode() >= 771 && event.weatherCode() <= 781) {
-                        return createCommand(blinds, 0);
+                        return createCommand(blinds, blindsAutomationConfig.getClosedPosition());
                     }
                     if (category == WeatherCategory.CLEAR) {
-                        if (temp > 25.0) return createCommand(blinds, 20);
-                        if (temp < 5.0) return createCommand(blinds, 100);
+                        if (temp > 25.0) return createCommand(blinds, blindsAutomationConfig.getSunnyPosition());
+                        if (temp < 5.0) return createCommand(blinds, blindsAutomationConfig.getOpenedPosition());
                     }
                     if (category == WeatherCategory.RAIN || category == WeatherCategory.SNOW) {
-                        return (temp < 0) ? createCommand(blinds, 50) : createCommand(blinds, 100);
+                        return (temp < 0)
+                                ? createCommand(blinds, blindsAutomationConfig.getRainSnowColdPosition())
+                                : createCommand(blinds, blindsAutomationConfig.getRainSnowWarmPosition());
                     }
                     if (category == WeatherCategory.ATMOSPHERE) {
-                        return createCommand(blinds, 100);
+                        return createCommand(blinds, blindsAutomationConfig.getAtmospherePosition());
                     }
                     if (category == WeatherCategory.CLOUDS || category == WeatherCategory.DRIZZLE) {
-                        log.info("Позиция должны быть 100");
-                        return createCommand(blinds, 100);
+                        return createCommand(blinds, blindsAutomationConfig.getOpenedPosition());
                     }
                     return null;
                 })
