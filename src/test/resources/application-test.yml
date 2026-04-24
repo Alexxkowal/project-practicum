@@ -1,6 +1,5 @@
 spring:
   datasource:
-
     driver-class-name: org.postgresql.Driver
   liquibase:
     enabled: true
@@ -9,6 +8,13 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+  kafka:
+    topic:
+      weather: weather-test-topic
+      actuator-commands: commands-test-topic
+    consumer:
+      group-id: test-group
+
 app:
   cred:
     token: "test-token"
@@ -25,29 +31,17 @@ app:
       sunny-position: 20
       high-temp-threshold: 25.0
       low-temp-threshold: 5.0
+      # Если эти поля есть в коде BlindsAutomationConfig, оставляем:
       atmosphere-position: 100
       rain-snow-warm-position: 100
       rain-snow-cold-position: 50
     heaters:
+      default-target-temp: 25.0
       cold-threshold: 10.0
       stop-threshold: 18.0
-      default-target-temp: 25.0
 
-  logging:
-    level:
-      org.springframework.web.reactive.function.client.WebClient: DEBUG
-      reactor.netty.http.client.HttpClient: DEBUG
-      org.springframework.test.context.support.DynamicPropertiesContextCustomizer: DEBUG
-      org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl: DEBUG
-      org.springframework.orm.jpa.JpaTransactionManager: DEBUG
-      org.springframework.transaction: TRACE
-      com.zaxxer.hikari: DEBUG
-      org.testcontainers: DEBUG
-      com.github.dockerjava: WARN
-      org.springframework.boot.testcontainers.service.connection: DEBUG
-kafka:
-  topic:
-    weather: weather-test-topic
-    actuator-commands: commands-test-topic
-  consumer:
-    group-id: test-group
+logging:
+  level:
+    org.springframework.web.reactive.function.client.WebClient: DEBUG
+    reactor.netty.http.client.HttpClient: DEBUG
+    org.testcontainers: DEBUG
