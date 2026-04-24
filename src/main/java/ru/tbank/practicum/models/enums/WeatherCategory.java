@@ -4,25 +4,26 @@ import lombok.Getter;
 
 @Getter
 public enum WeatherCategory {
-    THUNDERSTORM,
-    DRIZZLE,
-    RAIN,
-    SNOW,
-    ATMOSPHERE,
-    CLEAR,
-    CLOUDS,
-    UNKNOWN;
+    THUNDERSTORM(200, 299),
+    DRIZZLE(300, 399),
+    RAIN(500, 599),
+    SNOW(600, 699),
+    ATMOSPHERE(700, 799),
+    CLEAR(800, 800),
+    CLOUDS(801, 804),
+    UNKNOWN(0, 0);
+
+    private int from;
+    private int to;
+
+    WeatherCategory(int from, int to) {}
 
     public static WeatherCategory fromCode(int code) {
-        if (code == 800) return CLEAR;
-        if (code >= 801 && code <= 804) return CLOUDS;
-        return switch (code / 100) {
-            case 2 -> THUNDERSTORM;
-            case 3 -> DRIZZLE;
-            case 5 -> RAIN;
-            case 6 -> SNOW;
-            case 7 -> ATMOSPHERE;
-            default -> UNKNOWN;
-        };
+        for (WeatherCategory category : values()) {
+            if (code >= category.from && code <= category.to) {
+                return category;
+            }
+        }
+        return UNKNOWN;
     }
 }

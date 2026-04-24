@@ -10,6 +10,7 @@ import ru.tbank.practicum.kafka.dto.DeviceCommand;
 import ru.tbank.practicum.kafka.dto.WeatherEvent;
 import ru.tbank.practicum.kafka.dto.enums.DeviceAction;
 import ru.tbank.practicum.models.Blinds;
+import ru.tbank.practicum.models.enums.DeviceType;
 import ru.tbank.practicum.models.enums.WeatherCategory;
 import ru.tbank.practicum.services.BlindsService;
 
@@ -23,32 +24,32 @@ public class BlindsStrategy implements AutomationStrategy {
     @Override
     public List<DeviceCommand> process(WeatherEvent event) {
         WeatherCategory category = WeatherCategory.fromCode(event.weatherCode());
-        double temp = event.temperature();
+        int targetPos = calculateTargetPosition(category, event.temperature(), event.weatherCode());
+
         return blindsService.getAllBlinds().stream()
-                .map(blinds -> {
-                    if (category == WeatherCategory.THUNDERSTORM
-                            || event.weatherCode() >= 771 && event.weatherCode() <= 781) {
-                        return createCommand(blinds, blindsAutomationConfig.getClosedPosition());
-                    }
-                    if (category == WeatherCategory.CLEAR) {
-                        if (temp > 25.0) return createCommand(blinds, blindsAutomationConfig.getSunnyPosition());
-                        if (temp < 5.0) return createCommand(blinds, blindsAutomationConfig.getOpenedPosition());
-                    }
-                    if (category == WeatherCategory.RAIN || category == WeatherCategory.SNOW) {
-                        return (temp < 0)
-                                ? createCommand(blinds, blindsAutomationConfig.getRainSnowColdPosition())
-                                : createCommand(blinds, blindsAutomationConfig.getRainSnowWarmPosition());
-                    }
-                    if (category == WeatherCategory.ATMOSPHERE) {
-                        return createCommand(blinds, blindsAutomationConfig.getAtmospherePosition());
-                    }
-                    if (category == WeatherCategory.CLOUDS || category == WeatherCategory.DRIZZLE) {
-                        return createCommand(blinds, blindsAutomationConfig.getOpenedPosition());
-                    }
-                    return null;
-                })
+                .map(blinds -> createCommand(blinds, targetPos))
                 .filter(Objects::nonNull)
                 .toList();
+    }
+
+    private int calculateTargetPosition(WeatherCategory category, double temp, int weatherCode) {
+        if (weatherCode >= 771 && weatherCode <= 781) {
+            return blindsAutomationConfig.getClosedPosition();
+        }
+        return switch (category) {
+            case THUNDERSTORM -> blindsAutomationConfig.getClosedPosition();
+            case CLEAR ->
+                (temp > 25.0)
+                        ? blindsAutomationConfig.getSunnyPosition()
+                        : (temp < 5.0) ? blindsAutomationConfig.getOpenedPosition() : 100;
+            case RAIN, SNOW ->
+                (temp < 0)
+                        ? blindsAutomationConfig.getRainSnowColdPosition()
+                        : blindsAutomationConfig.getRainSnowWarmPosition();
+            case ATMOSPHERE -> blindsAutomationConfig.getAtmospherePosition();
+            case CLOUDS, DRIZZLE -> blindsAutomationConfig.getOpenedPosition();
+            default -> 100;
+        };
     }
 
     private DeviceCommand createCommand(Blinds blinds, int pos) {
@@ -58,6 +59,6 @@ public class BlindsStrategy implements AutomationStrategy {
                 blinds.getTargetPosition(),
                 pos);
         if (blinds.getTargetPosition() == pos) return null;
-        return new DeviceCommand("BLINDS", blinds.getId(), DeviceAction.SET_VALUE, (double) pos);
+        return new DeviceCommand(DeviceType.BLINDS, blinds.getId(), DeviceAction.SET_VALUE, (double) pos);
     }
 }

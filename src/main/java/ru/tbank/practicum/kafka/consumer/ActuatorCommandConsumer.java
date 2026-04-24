@@ -20,19 +20,19 @@ public class ActuatorCommandConsumer {
         log.info("Получена команда из kafka {}", command);
         try {
 
-            switch (command.deviceType().toUpperCase()) {
-                case "HEATER" -> {
+            switch (command.deviceType()) {
+                case HEATER -> {
                     heaterService.processCommand(command);
                     log.debug("Команда успешно передана в HeaterService");
                 }
-                case "BLINDS" -> {
+                case BLINDS -> {
                     blindsService.processCommand(command);
                     log.debug("Команда успешно передана в BlindsService");
                 }
                 default -> log.warn("Неизвестный тип устройства в команде: {}", command.deviceType());
             }
         } catch (Exception e) {
-            log.error("Ошибка при выполнении команды для устройства {}: {}", command.deviceId(), e.getMessage());
+            log.error("Ошибка при выполнении команды для устройства {}: {}", command.deviceId(), e.getMessage(), e);
         }
     }
 }

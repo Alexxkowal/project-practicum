@@ -9,6 +9,7 @@ import ru.tbank.practicum.config.HeaterAutomationConfig;
 import ru.tbank.practicum.kafka.dto.DeviceCommand;
 import ru.tbank.practicum.kafka.dto.WeatherEvent;
 import ru.tbank.practicum.kafka.dto.enums.DeviceAction;
+import ru.tbank.practicum.models.enums.DeviceType;
 import ru.tbank.practicum.services.HeaterService;
 
 @Component
@@ -24,10 +25,10 @@ public class HeatingStrategy implements AutomationStrategy {
         return heaterService.getAllHeaters().stream()
                 .map(heater -> {
                     if (temp < heaterAutomationConfig.getColdThreshold() && !heater.isWorking()) {
-                        return new DeviceCommand("HEATER", heater.getId(), DeviceAction.TURN_ON, 25.0);
+                        return new DeviceCommand(DeviceType.HEATER, heater.getId(), DeviceAction.TURN_ON, 25.0);
                     }
                     if (temp > heaterAutomationConfig.getStopThreshold() && heater.isWorking()) {
-                        return new DeviceCommand("HEATER", heater.getId(), DeviceAction.TURN_OFF, 0.0);
+                        return new DeviceCommand(DeviceType.HEATER, heater.getId(), DeviceAction.TURN_OFF, 0.0);
                     }
                     return null;
                 })
