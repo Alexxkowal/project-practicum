@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.tbank.practicum.kafka.dto.DeviceCommand;
 import ru.tbank.practicum.kafka.dto.WeatherEvent;
 import ru.tbank.practicum.kafka.producer.DeviceCommandProducer;
+import ru.tbank.practicum.monitoring.WeatherMetrics;
 import ru.tbank.practicum.services.strategies.AutomationStrategy;
 
 @Slf4j
@@ -17,10 +18,13 @@ public class WeatherEventConsumer {
 
     private final List<AutomationStrategy> strategyList;
     private final DeviceCommandProducer commandProducer;
+    private final WeatherMetrics weatherMetrics;
 
     @KafkaListener(topics = "${spring.kafka.topic.weather}", groupId = "${spring.get-id:smart-home-group}")
     public void consume(WeatherEvent event) {
         log.info("Событие получено: {}", event);
+        weatherMetrics.incrementEvents();
+        weatherMetrics.updateTemperature(event.temperature());
         for (AutomationStrategy strategy : strategyList) {
             List<DeviceCommand> commands = strategy.process(event);
             if (!commands.isEmpty()) {
