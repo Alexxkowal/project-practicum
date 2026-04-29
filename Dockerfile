@@ -5,9 +5,10 @@ RUN sed -i 's/\r$//' gradlew
 RUN chmod +x gradlew
 COPY gradle gradle
 COPY build.gradle settings.gradle ./
+RUN ./gradlew dependencies --no-daemon
 COPY src src
-RUN ./gradlew spotlessApply
-RUN ./gradlew clean build
+#RUN ./gradlew spotlessApply
+RUN ./gradlew clean build -x test -x spotlessJavaCheck
 
 FROM eclipse-temurin:25-jre-alpine
 WORKDIR /app

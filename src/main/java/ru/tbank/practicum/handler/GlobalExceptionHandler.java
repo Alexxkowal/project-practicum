@@ -25,8 +25,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(WebClientResponseException.class)
     public ResponseEntity<String> handleWebClientResponseException(WebClientResponseException ex) {
-        // Логируем ошибку, чтобы понимать, что стряслось
-        // И возвращаем 500 статус, который поймает твой mockMvc
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Ошибка внешнего сервиса погоды: " + ex.getMessage());
     }

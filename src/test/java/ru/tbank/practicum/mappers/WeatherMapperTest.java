@@ -24,6 +24,7 @@ class WeatherMapperTest {
         coord.setLon(37.0);
         response.setCoord(coord);
         Weather weatherDesc = new Weather();
+        weatherDesc.setId(800L);
         weatherDesc.setDescription("clear sky");
         response.setWeather(List.of(weatherDesc));
         Clouds clouds = new Clouds();
@@ -39,6 +40,7 @@ class WeatherMapperTest {
         assertEquals("clear sky", model.getDescription());
         assertNotNull(model.getTime());
         assertEquals(55.0, model.getLat());
+        assertEquals(800, model.getWeatherCode());
     }
 
     @Test

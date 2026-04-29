@@ -43,6 +43,9 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                   defaultValueComputed: "CURRENT_TIMESTAMP"
+              - column:
+                  name: humidity
+                  type: INT
 
   - changeSet:
       id: 22032026-add-weather-time-index
