@@ -30,9 +30,11 @@ app:
   cred:
     token: "test-token"
   weather:
-    # Используем порт, который предоставит WireMock
     base-url: http://localhost:${wiremock.server.port:8089}
     update-rate: 1000000
+    default-lat: 51.6
+    default-lon: 46.0
+
   automation:
     blinds:
       closed-position: 0
@@ -44,9 +46,18 @@ app:
       rain-snow-warm-position: 100
       rain-snow-cold-position: 50
     heaters:
-      default-target-temp: 25.0
+      target-temp: 22.0
       cold-threshold: 10.0
-      stop-threshold: 18.0
+      stop-threshold: 25.0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "health", "prometheus", "metrics" ]
+  metrics:
+    tags:
+      application: smart-home-app-test
 
 logging:
   level:
