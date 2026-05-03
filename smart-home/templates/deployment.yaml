@@ -14,7 +14,6 @@ spec:
       labels:
         {{- include "smart-home.selectorLabels" . | nindent 8 }}
     spec:
-      # Настройка DNS для выхода во внешнюю сеть (OpenWeatherMap)
       dnsPolicy: ClusterFirst
       containers:
         - name: {{ .Chart.Name }}
@@ -24,19 +23,13 @@ spec:
             - name: http
               containerPort: {{ .Values.app.service.port }}
               protocol: TCP
-
-          # Подтягиваем общие настройки (DB_HOST и т.д.)
           envFrom:
             - configMapRef:
                 name: {{ include "smart-home.fullname" . }}-config
 
           env:
-            # Используем имя сервиса Кафки. Если релиз называется smart-home,
-            # то сервис будет smart-home-kafka
             - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
               value: "{{ .Release.Name }}-kafka:9092"
-
-            # Пароль от БД оставляем, так как Postgres (Bitnami) требует его по умолчанию
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -47,7 +40,7 @@ spec:
             httpGet:
               path: /actuator/health/liveness
               port: http
-            initialDelaySeconds: 120 # Увеличил, так как Java на 16ГБ может долго стартовать
+            initialDelaySeconds: 120
             periodSeconds: 10
           readinessProbe:
             httpGet:

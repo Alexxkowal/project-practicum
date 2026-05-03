@@ -1,4 +1,3 @@
-# Настройки для твоего Java-приложения
 app:
   replicaCount: 2
   image:
@@ -8,7 +7,6 @@ app:
   service:
     port: 8081
 
-# Настройки PostgreSQL (Bitnami)
 postgresql:
   auth:
     database: smart_home
@@ -45,7 +43,6 @@ kafka:
       protocol: PLAINTEXT
     interbroker:
       protocol: PLAINTEXT
-  # Полностью убираем настройки sasl
   kraft:
     enabled: true
   zookeeper:
