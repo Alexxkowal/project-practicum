@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import ru.tbank.practicum.kafka.dto.DeviceCommand;
+import ru.tbank.practicum.monitoring.DeviceMetrics;
 import ru.tbank.practicum.services.BlindsService;
 import ru.tbank.practicum.services.HeaterService;
 
@@ -14,12 +15,14 @@ import ru.tbank.practicum.services.HeaterService;
 public class ActuatorCommandConsumer {
     private final HeaterService heaterService;
     private final BlindsService blindsService;
+    private final DeviceMetrics deviceMetrics;
 
     @KafkaListener(topics = "${spring.kafka.topic.actuator-commands}", groupId = "${spring.kafka.consumer.group-id}")
     public void consume(DeviceCommand command) {
         log.info("Получена команда из kafka {}", command);
         try {
-
+            deviceMetrics.incrementDeviceCommand(
+                    command.deviceType().name(), command.action().toString());
             switch (command.deviceType()) {
                 case HEATER -> {
                     heaterService.processCommand(command);
@@ -32,6 +35,7 @@ public class ActuatorCommandConsumer {
             }
         } catch (Exception e) {
             log.error("Ошибка при выполнении команды для устройства {}: {}", command.deviceId(), e.getMessage(), e);
+            deviceMetrics.incrementDeviceCommand(command.deviceType().name(), "ERROR");
         }
     }
 }

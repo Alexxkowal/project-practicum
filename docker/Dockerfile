@@ -1,12 +1,12 @@
 FROM eclipse-temurin:25-jdk-alpine AS build
 WORKDIR /app
-COPY gradlew .
+COPY ../gradlew .
 RUN sed -i 's/\r$//' gradlew
 RUN chmod +x gradlew
-COPY gradle gradle
-COPY build.gradle settings.gradle ./
+COPY ../gradle gradle
+COPY ../build.gradle settings.gradle ./
 RUN ./gradlew dependencies --no-daemon
-COPY src src
+COPY ../src src
 #RUN ./gradlew spotlessApply
 RUN ./gradlew clean build -x test -x spotlessJavaCheck
 
