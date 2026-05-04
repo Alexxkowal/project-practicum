@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Home — тест API</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Умный дом — тестовая панель</h1>
+    <p class="sub">В Docker откройте эту страницу с порта <code>3005</code> — запросы к API пойдут через nginx. Локально укажите базовый URL бэкенда.</p>
+  </header>
+  <main>
+    <section>
+      <h2>Базовый URL API</h2>
+      <div class="row">
+        <label style="flex: 1; min-width: 200px">
+          Пусто = тот же хост (прокси nginx в контейнере)
+          <input type="text" id="apiBase" placeholder="http://localhost:8081" />
+        </label>
+        <button type="button" id="saveApiBase" class="secondary">Сохранить</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Устройства</h2>
+      <div class="row">
+        <label>Имя <input type="text" id="newDeviceName" placeholder="Гостиная" /></label>
+        <label>Тип
+          <select id="newDeviceType">
+            <option value="HEATER">HEATER</option>
+            <option value="BLINDS">BLINDS</option>
+          </select>
+        </label>
+        <button type="button" id="btnCreateDevice">Создать</button>
+        <button type="button" id="btnRefreshDevices" class="secondary">Обновить список</button>
+      </div>
+      <ul class="device-list" id="deviceList"></ul>
+      <div id="deviceDetail"></div>
+    </section>
+
+    <section>
+      <h2>Расписание (выбранное устройство)</h2>
+      <p class="sub" id="scheduleHint">Сначала выберите устройство в списке выше.</p>
+      <div class="row" id="scheduleFormRow" style="display: none">
+        <label>Время (HH:mm) <input type="text" id="schTime" placeholder="08:30" /></label>
+        <label>Действие
+          <select id="schAction">
+            <option value="ON">ON</option>
+            <option value="OFF">OFF</option>
+            <option value="SET_VALUE">SET_VALUE</option>
+          </select>
+        </label>
+        <label>targetValue <input type="number" id="schValue" step="0.1" placeholder="опционально" /></label>
+        <label>Активно <select id="schActive"><option value="true">да</option><option value="false">нет</option></select></label>
+        <button type="button" id="btnAddSchedule">Добавить слот</button>
+      </div>
+      <div id="scheduleTable"></div>
+    </section>
+
+    <section>
+      <h2>Погода (ручной запрос OpenWeather → Kafka)</h2>
+      <div class="row">
+        <label>lat <input type="number" id="wLat" step="0.0001" value="51.6" /></label>
+        <label>lon <input type="number" id="wLon" step="0.0001" value="46" /></label>
+        <button type="button" id="btnWeather">GET /weather/current</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Лог ответов</h2>
+      <pre class="log" id="log"></pre>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
