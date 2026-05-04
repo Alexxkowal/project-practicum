@@ -5,6 +5,7 @@ import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.tbank.practicum.config.BlindsAutomationConfig;
 import ru.tbank.practicum.kafka.dto.DeviceCommand;
 import ru.tbank.practicum.kafka.dto.WeatherEvent;
@@ -22,6 +23,7 @@ public class BlindsStrategy implements AutomationStrategy {
     private final BlindsAutomationConfig blindsAutomationConfig;
 
     @Override
+    @Transactional(readOnly = true)
     public List<DeviceCommand> process(WeatherEvent event) {
         WeatherCategory category = WeatherCategory.fromCode(event.weatherCode());
         int targetPos = calculateTargetPosition(category, event.temperature(), event.weatherCode());
@@ -53,6 +55,9 @@ public class BlindsStrategy implements AutomationStrategy {
     }
 
     private DeviceCommand createCommand(Blinds blinds, int pos) {
+        if (blinds.getDevice() == null || !blinds.getDevice().isEnabled() || !blinds.getDevice().isAutoMode()) {
+            return null;
+        }
         log.info(
                 "Проверка шторы ID {}: в базе target={}, хотим поставить={}",
                 blinds.getId(),

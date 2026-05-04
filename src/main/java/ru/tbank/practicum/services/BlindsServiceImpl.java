@@ -9,24 +9,31 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.tbank.practicum.exception.BlindsNotFoundException;
 import ru.tbank.practicum.kafka.dto.DeviceCommand;
 import ru.tbank.practicum.models.Blinds;
+import ru.tbank.practicum.models.Device;
 import ru.tbank.practicum.repositories.BlindsRepository;
+import ru.tbank.practicum.repositories.DeviceRepository;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class BlindsServiceImpl implements BlindsService {
     private final BlindsRepository blindsRepository;
+    private final DeviceRepository deviceRepository;
 
     @Override
+    @Transactional
     public Blinds updatePosition(Long id, Integer position) {
         Blinds blinds = getBlindsById(id);
+        disableAutoMode(blinds.getDevice());
         blinds.setTargetPosition(position);
         return blindsRepository.save(blinds);
     }
 
     @Override
+    @Transactional
     public Blinds updateSchedule(Long id, LocalTime openTime, LocalTime closeTime) {
         Blinds blinds = getBlindsById(id);
+        disableAutoMode(blinds.getDevice());
         if (openTime != null) {
             blinds.setOpenTime(openTime);
         }
@@ -64,5 +71,12 @@ public class BlindsServiceImpl implements BlindsService {
 
     private Blinds getBlindsById(Long id) {
         return blindsRepository.findById(id).orElseThrow(() -> new BlindsNotFoundException(id));
+    }
+
+    private void disableAutoMode(Device device) {
+        if (device != null && device.isAutoMode()) {
+            device.setAutoMode(false);
+            deviceRepository.save(device);
+        }
     }
 }

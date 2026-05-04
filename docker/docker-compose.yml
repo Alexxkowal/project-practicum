@@ -75,6 +75,18 @@ services:
         condition: service_completed_successfully
       logstash:
         condition: service_started
+
+  web-ui:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    image: smart-home-web-ui:latest
+    container_name: smart-home-web-ui
+    ports:
+      - "3005:80"
+    depends_on:
+      - app
+
   elasticsearch:
    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
    container_name: elasticsearch
