@@ -7,10 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tbank.practicum.config.HeaterAutomationConfig;
-import ru.tbank.practicum.models.Heater;
 import ru.tbank.practicum.kafka.dto.DeviceCommand;
 import ru.tbank.practicum.kafka.dto.WeatherEvent;
 import ru.tbank.practicum.kafka.dto.enums.DeviceAction;
+import ru.tbank.practicum.models.Heater;
 import ru.tbank.practicum.models.enums.DeviceType;
 import ru.tbank.practicum.services.HeaterService;
 
@@ -32,7 +32,9 @@ public class HeatingStrategy implements AutomationStrategy {
     }
 
     private DeviceCommand commandForHeater(Heater heater, double ambientTemp) {
-        if (heater.getDevice() == null || !heater.getDevice().isEnabled() || !heater.getDevice().isAutoMode()) {
+        if (heater.getDevice() == null
+                || !heater.getDevice().isEnabled()
+                || !heater.getDevice().isAutoMode()) {
             return null;
         }
         if (ambientTemp < heaterAutomationConfig.getColdThreshold() && !heater.isWorking()) {

@@ -3,7 +3,6 @@ package ru.tbank.practicum.controllers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -65,14 +64,13 @@ class DeviceControllerIT extends BaseIT {
     @Test
     @DisplayName("DELETE /devices/{id}: каскадно удаляет дочерние сущности")
     void deleteDevice_cascades() throws Exception {
-        String json =
-                mockMvc.perform(post("/devices")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content("{\"name\":\"Жалюзи\",\"type\":\"BLINDS\"}"))
-                        .andExpect(status().isCreated())
-                        .andReturn()
-                        .getResponse()
-                        .getContentAsString();
+        String json = mockMvc.perform(post("/devices")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\":\"Жалюзи\",\"type\":\"BLINDS\"}"))
+                .andExpect(status().isCreated())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
         long id = objectMapper.readTree(json).get("id").asLong();
 
         mockMvc.perform(delete("/devices/" + id)).andExpect(status().isNoContent());

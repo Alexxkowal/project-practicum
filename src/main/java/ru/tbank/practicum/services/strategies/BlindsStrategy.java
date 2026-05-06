@@ -55,7 +55,9 @@ public class BlindsStrategy implements AutomationStrategy {
     }
 
     private DeviceCommand createCommand(Blinds blinds, int pos) {
-        if (blinds.getDevice() == null || !blinds.getDevice().isEnabled() || !blinds.getDevice().isAutoMode()) {
+        if (blinds.getDevice() == null
+                || !blinds.getDevice().isEnabled()
+                || !blinds.getDevice().isAutoMode()) {
             return null;
         }
         log.info(

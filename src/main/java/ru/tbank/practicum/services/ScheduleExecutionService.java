@@ -71,11 +71,12 @@ public class ScheduleExecutionService {
 
     private DeviceCommand heaterCommand(Long deviceId, SchedulesAction action, Double targetValue) {
         return switch (action) {
-            case ON -> new DeviceCommand(
-                    DeviceType.HEATER,
-                    deviceId,
-                    DeviceAction.TURN_ON,
-                    targetValue != null ? targetValue : DEFAULT_HEATER_ON_TEMP);
+            case ON ->
+                new DeviceCommand(
+                        DeviceType.HEATER,
+                        deviceId,
+                        DeviceAction.TURN_ON,
+                        targetValue != null ? targetValue : DEFAULT_HEATER_ON_TEMP);
             case OFF -> new DeviceCommand(DeviceType.HEATER, deviceId, DeviceAction.TURN_OFF, 0.0);
             case SET_VALUE -> {
                 if (targetValue == null) {

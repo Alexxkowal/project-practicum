@@ -18,8 +18,7 @@ public class ScheduleController {
 
     @PostMapping("/devices/{deviceId}/schedules")
     @ResponseStatus(HttpStatus.CREATED)
-    public ScheduleResponseDTO create(
-            @PathVariable Long deviceId, @Valid @RequestBody CreateScheduleRequestDTO dto) {
+    public ScheduleResponseDTO create(@PathVariable Long deviceId, @Valid @RequestBody CreateScheduleRequestDTO dto) {
         return scheduleService.create(deviceId, dto);
     }
 
