@@ -1,0 +1,56 @@
+app:
+  replicaCount: 2
+  image:
+    repository: smart-home
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    port: 8081
+
+postgresql:
+  auth:
+    database: smart_home
+    username: user
+    password: "password"
+  volumePermissions:
+    enabled: true
+  primary:
+    podSecurityContext:
+      enabled: true
+      fsGroup: 1001
+    containerSecurityContext:
+      enabled: true
+      runAsUser: 1001
+    resources:
+      limits:
+        memory: "512Mi"
+      requests:
+        cpu: "100m"
+        memory: "512Mi"
+
+kafka:
+  image:
+    repository: bitnamilegacy/kafka
+    tag: 4.0.0-debian-12-r10
+  controller:
+    replicaCount: 1
+  broker:
+    replicaCount: 0
+  listeners:
+    client:
+      protocol: PLAINTEXT
+    controller:
+      protocol: PLAINTEXT
+    interbroker:
+      protocol: PLAINTEXT
+  kraft:
+    enabled: true
+  zookeeper:
+    enabled: false
+  persistence:
+    enabled: false
+  resources:
+    limits:
+      memory: "768Mi"
+    requests:
+      memory: "512Mi"

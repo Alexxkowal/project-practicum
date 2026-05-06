@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "smart-home.fullname" . }}-migrator
+  labels:
+    {{- include "smart-home.labels" . | nindent 4 }}
+spec:
+  template:
+    spec:
+      containers:
+        - name: migrator
+          image: "smart-home-migrator:5.0"
+          args:
+            - "--url=jdbc:postgresql://{{ include "smart-home.fullname" . }}-postgresql:5432/smart_home"
+            - "--username=user"
+            - "--password=$(DB_PASSWORD)"
+            - "--changelog-file=db/changelog/db.changelog-master.yml"
+            - "update"
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "smart-home.fullname" . }}-auth
+                  key: postgres-password
+      restartPolicy: OnFailure
+  backoffLimit: 5

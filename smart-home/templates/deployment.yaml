@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "smart-home.fullname" . }}
+  labels:
+    {{- include "smart-home.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.app.replicaCount | default 2 }}
+  selector:
+    matchLabels:
+      {{- include "smart-home.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "smart-home.selectorLabels" . | nindent 8 }}
+    spec:
+      dnsPolicy: ClusterFirst
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy | default "IfNotPresent" }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.app.service.port }}
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: {{ include "smart-home.fullname" . }}-config
+
+          env:
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: "{{ .Release.Name }}-kafka:9092"
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "smart-home.fullname" . }}-auth
+                  key: postgres-password
+
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            initialDelaySeconds: 120
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+            initialDelaySeconds: 120
+            periodSeconds: 5
+
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "512Mi"
+              cpu: "200m"
