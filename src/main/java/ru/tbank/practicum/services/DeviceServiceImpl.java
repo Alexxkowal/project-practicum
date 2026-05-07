@@ -102,7 +102,7 @@ public class DeviceServiceImpl implements DeviceService {
         if (!deviceRepository.existsById(id)) {
             throw new DeviceNotFoundException(id);
         }
-        deviceRepository.existsById(id);
+        deviceRepository.deleteById(id);
     }
 
     private DeviceDetailResponseDTO toDetail(Device device) {
