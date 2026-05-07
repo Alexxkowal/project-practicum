@@ -1,5 +1,6 @@
 package ru.tbank.practicum.config;
 
+import java.time.Clock;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,11 @@ public class AppConfig {
 
     @Value("${app.weather.base-url:https://api.openweathermap.org}")
     private String weatherBaseUrl;
+
+    @Bean
+    public Clock clock() {
+        return Clock.systemDefaultZone();
+    }
 
     @Bean
     public WebClient webClient() {

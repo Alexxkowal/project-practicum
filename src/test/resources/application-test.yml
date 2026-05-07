@@ -2,12 +2,20 @@ server:
   port: 0
 
 spring:
+  task:
+    scheduling:
+      enabled: false
   datasource:
     url: jdbc:tc:postgresql:15:///smart_home?TC_INITSCRIPT=file:src/test/resources/init.sql
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
 
   kafka:
     bootstrap-servers: ${spring.embedded.kafka.brokers:localhost:9092}
+    admin:
+      auto-create: false
+      fail-fast: false
+    listener:
+      auto-startup: false
     topic:
       weather: weather-test-topic
       actuator-commands: commands-test-topic

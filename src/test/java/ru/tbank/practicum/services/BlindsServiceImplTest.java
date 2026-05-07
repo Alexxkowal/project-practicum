@@ -1,6 +1,7 @@
 package ru.tbank.practicum.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -16,13 +17,18 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.tbank.practicum.exception.BlindsNotFoundException;
 import ru.tbank.practicum.models.Blinds;
+import ru.tbank.practicum.models.Device;
 import ru.tbank.practicum.repositories.BlindsRepository;
+import ru.tbank.practicum.repositories.DeviceRepository;
 
 @ExtendWith(MockitoExtension.class)
 class BlindsServiceImplTest {
 
     @Mock
     private BlindsRepository blindsRepository;
+
+    @Mock
+    private DeviceRepository deviceRepository;
 
     @InjectMocks
     private BlindsServiceImpl blindsService;
@@ -53,5 +59,23 @@ class BlindsServiceImplTest {
             blindsService.updatePosition(id, 100);
         });
         verify(blindsRepository, never()).save(any());
+    }
+
+    @Test
+    public void updatePosition_ShouldDisableAutoMode_WhenDeviceInAuto() {
+        Long id = 1L;
+        Device device = new Device();
+        device.setAutoMode(true);
+        Blinds blinds = new Blinds();
+        blinds.setId(id);
+        blinds.setDevice(device);
+        blinds.setTargetPosition(0);
+        when(blindsRepository.findById(id)).thenReturn(Optional.of(blinds));
+        when(blindsRepository.save(any(Blinds.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        blindsService.updatePosition(id, 50);
+
+        assertFalse(device.isAutoMode());
+        verify(deviceRepository).save(device);
     }
 }
