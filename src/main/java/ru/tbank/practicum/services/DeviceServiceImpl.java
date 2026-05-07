@@ -99,8 +99,10 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     @Transactional
     public void delete(Long id) {
-        Device device = deviceRepository.findById(id).orElseThrow(() -> new DeviceNotFoundException(id));
-        deviceRepository.delete(device);
+        if (!deviceRepository.existsById(id)) {
+            throw new DeviceNotFoundException(id);
+        }
+        deviceRepository.existsById(id);
     }
 
     private DeviceDetailResponseDTO toDetail(Device device) {
